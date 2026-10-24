@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-labelledby="t d">
+  <title id="t">ai-health-tracking architecture</title>
+  <desc id="d">You log food with Claude, which writes it to a Google Sheet. Apps Scripts inside the sheet sync Oura, and optionally Strava and FitNotes, on a schedule. Claude and a live dashboard read the sheet.</desc>
+  <style>
+    .bg { fill: #ffffff; }
+    .t { font: 600 24px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #1f1f1f; }
+    .h { font: 600 16px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #1f1f1f; }
+    .b { font: 400 13px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #4a4a4a; }
+    .tb { font: 600 13px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #1f1f1f; }
+    .lbl { font: 500 12px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #4a4a4a; }
+    .col { font: 600 11.5px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #8a8a8a; letter-spacing: 0.08em; }
+    .core { fill: #fbf3ec; stroke: #d97a3a; stroke-width: 1.6; }
+    .claude { fill: #fdeee3; stroke: #c4602a; stroke-width: 2; }
+    .sheet { fill: #eef6ee; stroke: #3f8f4f; stroke-width: 1.8; }
+    .opt { fill: #f3f5fb; stroke: #5a6fb3; stroke-width: 1.6; stroke-dasharray: 7 5; }
+    .rule { stroke: #3f8f4f; stroke-opacity: 0.25; stroke-width: 1; }
+    .a { stroke: #555; stroke-width: 1.7; fill: none; marker-end: url(#ah); }
+    .a2 { stroke: #555; stroke-width: 1.7; fill: none; marker-end: url(#ah); marker-start: url(#ah); }
+    .ao { stroke: #5a6fb3; stroke-width: 1.7; fill: none; stroke-dasharray: 7 5; marker-end: url(#aho); }
+    .ahf { fill: #555; } .ahof { fill: #5a6fb3; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #1b1b1d; }
+      .t, .h, .tb { fill: #f1f1f1; }
+      .b, .lbl { fill: #c9c9c9; }
+      .col { fill: #8f8f8f; }
+      .core { fill: #3a2a1f; stroke: #e8955a; }
+      .claude { fill: #43291b; stroke: #ee8a52; }
+      .sheet { fill: #1f3324; stroke: #6cc07c; }
+      .opt { fill: #232a3d; stroke: #8ea2e6; }
+      .rule { stroke: #6cc07c; }
+      .a, .a2 { stroke: #bdbdbd; } .ahf { fill: #bdbdbd; }
+      .ao { stroke: #8ea2e6; } .ahof { fill: #8ea2e6; }
+    }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ahf" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="aho" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ahof" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+  <rect class="bg" width="1200" height="620"/>
+
+  <text class="t" x="40" y="52">How ai-health-tracking fits together</text>
+
+  <text class="col" x="40" y="104">YOUR DATA</text>
+  <text class="col" x="362" y="104">GETTING IT IN</text>
+  <text class="col" x="692" y="104">ONE GOOGLE SHEET</text>
+  <text class="col" x="972" y="104">WHAT YOU SEE</text>
+
+  <!-- Sources -->
+  <rect class="core" x="40" y="120" width="250" height="130" rx="10"/>
+  <text class="h" x="58" y="148">You, chatting with Claude</text>
+  <text class="b" x="58" y="172">Food as text or a photo</text>
+  <text class="b" x="58" y="192">Weigh-ins, plan changes</text>
+  <text class="b" x="58" y="212">Questions about your progress</text>
+
+  <rect class="core" x="40" y="270" width="250" height="70" rx="10"/>
+  <text class="h" x="58" y="298">Oura ring</text>
+  <text class="b" x="58" y="322">Sleep, readiness, calories burned</text>
+
+  <rect class="opt" x="40" y="360" width="250" height="70" rx="10"/>
+  <text class="h" x="58" y="388">Strava (optional)</text>
+  <text class="b" x="58" y="412">Rides and runs: power, kJ</text>
+
+  <rect class="opt" x="40" y="450" width="250" height="70" rx="10"/>
+  <text class="h" x="58" y="478">FitNotes (optional)</text>
+  <text class="b" x="58" y="502">Gym sets: weight and reps</text>
+
+  <!-- Getting it in -->
+  <rect class="claude" x="362" y="120" width="260" height="86" rx="10"/>
+  <text class="h" x="380" y="148">Claude Project</text>
+  <text class="b" x="380" y="172">Logs food with macros and alcohol</text>
+  <text class="b" x="380" y="192">Coaches against your targets</text>
+
+  <rect class="core" x="362" y="226" width="260" height="294" rx="10"/>
+  <text class="h" x="380" y="254">Scripts inside the sheet</text>
+  <text class="b" x="380" y="278">Run on Google, on a schedule</text>
+  <text class="b" x="380" y="310">Oura sync, hourly</text>
+  <text class="b" x="380" y="400">Strava sync, hourly</text>
+  <text class="b" x="380" y="482">FitNotes import, from your</text>
+  <text class="b" x="380" y="500">CSV export</text>
+
+  <!-- Sheet -->
+  <rect class="sheet" x="692" y="120" width="230" height="400" rx="10"/>
+  <text class="h" x="710" y="148">Food log</text>
+  <text class="tb" x="710" y="180">Log</text><text class="b" x="740" y="180">food, one row per item</text>
+  <line class="rule" x1="710" y1="194" x2="904" y2="194"/>
+  <text class="tb" x="710" y="216">Targets</text><text class="b" x="764" y="216">your settings</text>
+  <line class="rule" x1="710" y1="230" x2="904" y2="230"/>
+  <text class="tb" x="710" y="252">Daily, Weekly</text>
+  <text class="b" x="710" y="272">eaten vs targets, burn, sleep</text>
+  <line class="rule" x1="710" y1="286" x2="904" y2="286"/>
+  <text class="tb" x="710" y="310">Wearable tabs</text>
+  <text class="b" x="710" y="330">same columns for any device</text>
+  <line class="rule" x1="710" y1="360" x2="904" y2="360"/>
+  <text class="tb" x="710" y="400">Strava activities</text>
+  <text class="b" x="710" y="420">power and kJ per ride</text>
+  <line class="rule" x1="710" y1="446" x2="904" y2="446"/>
+  <text class="tb" x="710" y="482">Gym sets</text>
+  <text class="b" x="710" y="502">with estimated 1RM</text>
+
+  <!-- Output -->
+  <rect class="claude" x="972" y="120" width="188" height="176" rx="10"/>
+  <text class="h" x="990" y="148">Dashboard</text>
+  <text class="b" x="990" y="172">A Claude artifact that</text>
+  <text class="b" x="990" y="190">reads the sheet live</text>
+  <text class="tb" x="990" y="224">Today</text>
+  <text class="b" x="990" y="244">your day, what fits now</text>
+  <text class="tb" x="990" y="268">Insights</text>
+  <text class="b" x="990" y="286">patterns, sleep, progress</text>
+
+  <rect class="core" x="972" y="316" width="188" height="70" rx="10"/>
+  <text class="h" x="990" y="344">Claude, in chat</text>
+  <text class="b" x="990" y="368">answers from the sheet</text>
+
+  <!-- Arrows -->
+  <path class="a2" d="M292,163 L360,163"/>
+  <text class="lbl" x="304" y="154">chat</text>
+  <path class="a" d="M624,150 L690,150"/>
+  <text class="lbl" x="634" y="142">writes</text>
+  <path class="a" d="M690,180 L624,180"/>
+  <text class="lbl" x="638" y="198">reads</text>
+
+  <path class="a" d="M292,305 L360,305"/>
+  <path class="ao" d="M292,395 L360,395"/>
+  <path class="ao" d="M292,485 L360,485"/>
+  <path class="a" d="M624,305 L690,305"/>
+  <path class="ao" d="M624,395 L690,395"/>
+  <path class="ao" d="M624,485 L690,485"/>
+
+  <path class="a" d="M924,208 L970,208"/>
+  <path class="a" d="M924,350 L970,350"/>
+
+  <!-- Legend -->
+  <path class="a" d="M40,572 L84,572"/><text class="lbl" x="94" y="576">Core</text>
+  <path class="ao" d="M150,572 L194,572"/><text class="lbl" x="204" y="576">Optional</text>
+  <text class="lbl" x="362" y="576">Your data stays in your own Google Sheet and Claude account. Device tokens stay in your own script settings.</text>
+</svg>
