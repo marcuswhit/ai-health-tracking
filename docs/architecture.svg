@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" width="1200" height="620" role="img" aria-labelledby="t d">
+  <title id="t">ai-health-tracking architecture</title>
+  <desc id="d">Five data domains (food, body weight, sleep and recovery, exercise, gym) flow into one Google Sheet. You log food and weight by chatting with Claude. Apps Scripts sync Oura, and optionally Strava and FitNotes. Claude and a live dashboard read the joined sheet to find patterns across domains.</desc>
+  <style>
+    .bg { fill: #ffffff; }
+    .t { font: 600 24px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #1f1f1f; }
+    .h { font: 600 16px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #1f1f1f; }
+    .b { font: 400 13px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #4a4a4a; }
+    .tb { font: 600 13px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #1f1f1f; }
+    .lbl { font: 500 12px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #4a4a4a; }
+    .col { font: 600 11.5px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #8a8a8a; letter-spacing: 0.08em; }
+    .core { fill: #fbf3ec; stroke: #d97a3a; stroke-width: 1.6; }
+    .claude { fill: #fdeee3; stroke: #c4602a; stroke-width: 2; }
+    .sheet { fill: #eef6ee; stroke: #3f8f4f; stroke-width: 1.8; }
+    .opt { fill: #f3f5fb; stroke: #5a6fb3; stroke-width: 1.6; stroke-dasharray: 7 5; }
+    .rule { stroke: #3f8f4f; stroke-opacity: 0.25; stroke-width: 1; }
+    .d-food { fill: #e07b2e; } .d-body { fill: #8a5fb3; } .d-sleep { fill: #3b7dd8; }
+    .d-ex { fill: #1f9d8a; } .d-gym { fill: #c9961a; }
+    .a { stroke: #555; stroke-width: 1.7; fill: none; marker-end: url(#ah); }
+    .a2 { stroke: #555; stroke-width: 1.7; fill: none; marker-end: url(#ah); marker-start: url(#ah); }
+    .ao { stroke: #5a6fb3; stroke-width: 1.7; fill: none; stroke-dasharray: 7 5; marker-end: url(#aho); }
+    .ahf { fill: #555; } .ahof { fill: #5a6fb3; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #1b1b1d; }
+      .t, .h, .tb { fill: #f1f1f1; }
+      .b, .lbl { fill: #c9c9c9; }
+      .col { fill: #8f8f8f; }
+      .core { fill: #3a2a1f; stroke: #e8955a; }
+      .claude { fill: #43291b; stroke: #ee8a52; }
+      .sheet { fill: #1f3324; stroke: #6cc07c; }
+      .opt { fill: #232a3d; stroke: #8ea2e6; }
+      .rule { stroke: #6cc07c; }
+      .d-food { fill: #f0914a; } .d-body { fill: #b08be0; } .d-sleep { fill: #6aa3f0; }
+      .d-ex { fill: #4cc4b0; } .d-gym { fill: #e6b83e; }
+      .a, .a2 { stroke: #bdbdbd; } .ahf { fill: #bdbdbd; }
+      .ao { stroke: #8ea2e6; } .ahof { fill: #8ea2e6; }
+    }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ahf" d="M0,0 L10,5 L0,10 z"/></marker>
+    <marker id="aho" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ahof" d="M0,0 L10,5 L0,10 z"/></marker>
+  </defs>
+  <rect class="bg" width="1200" height="620"/>
+
+  <text class="t" x="40" y="52">How ai-health-tracking fits together</text>
+
+  <text class="col" x="40" y="104">YOUR DATA, BY DOMAIN</text>
+  <text class="col" x="362" y="104">GETTING IT IN</text>
+  <text class="col" x="692" y="104">ONE GOOGLE SHEET</text>
+  <text class="col" x="972" y="104">WHAT YOU SEE</text>
+
+  <!-- Domains -->
+  <rect class="core" x="40" y="120" width="250" height="66" rx="10"/>
+  <rect class="d-food" x="40" y="120" width="7" height="66" rx="3"/>
+  <text class="h" x="62" y="147">Food</text>
+  <text class="b" x="62" y="169">Chat or photo: meals and drinks</text>
+  <rect class="core" x="40" y="198" width="250" height="66" rx="10"/>
+  <rect class="d-body" x="40" y="198" width="7" height="66" rx="3"/>
+  <text class="h" x="62" y="225">Body</text>
+  <text class="b" x="62" y="247">Weigh-ins, by chat</text>
+  <rect class="core" x="40" y="276" width="250" height="66" rx="10"/>
+  <rect class="d-sleep" x="40" y="276" width="7" height="66" rx="3"/>
+  <text class="h" x="62" y="303">Sleep and recovery</text>
+  <text class="b" x="62" y="325">Oura: sleep, HRV, readiness, burn</text>
+  <rect class="opt" x="40" y="354" width="250" height="66" rx="10"/>
+  <rect class="d-ex" x="40" y="354" width="7" height="66" rx="3"/>
+  <text class="h" x="62" y="381">Exercise (optional)</text>
+  <text class="b" x="62" y="403">Strava: power and kJ per ride</text>
+  <rect class="opt" x="40" y="432" width="250" height="66" rx="10"/>
+  <rect class="d-gym" x="40" y="432" width="7" height="66" rx="3"/>
+  <text class="h" x="62" y="459">Gym (optional)</text>
+  <text class="b" x="62" y="481">FitNotes: sets, reps, weight</text>
+
+  <!-- Getting it in -->
+  <rect class="claude" x="362" y="120" width="260" height="144" rx="10"/>
+  <text class="h" x="380" y="148">Claude Project</text>
+  <text class="b" x="380" y="172">Logs food and weigh-ins from chat</text>
+  <text class="b" x="380" y="192">Estimates macros, alcohol, GL</text>
+  <text class="b" x="380" y="212">Coaches against your targets</text>
+
+  <rect class="core" x="362" y="276" width="260" height="222" rx="10"/>
+  <text class="h" x="380" y="304">Scripts inside the sheet</text>
+  <text class="b" x="380" y="324">Run on Google, on a schedule</text>
+  <text class="b" x="380" y="364">Oura sync, hourly</text>
+  <text class="b" x="380" y="410">Strava sync, hourly</text>
+  <text class="b" x="380" y="452">FitNotes import, from your</text>
+  <text class="b" x="380" y="470">CSV export</text>
+
+  <!-- Sheet -->
+  <rect class="sheet" x="692" y="120" width="230" height="378" rx="10"/>
+  <circle class="d-food" cx="712" cy="148" r="6"/>
+  <text class="tb" x="730" y="152">Log</text>
+  <text class="b" x="730" y="172">food, one row per item</text>
+  <line class="rule" x1="710" y1="192" x2="904" y2="192"/>
+  <circle class="d-food" cx="708" cy="226" r="4.5"/><circle class="d-sleep" cx="718" cy="226" r="4.5"/><circle class="d-ex" cx="728" cy="226" r="4.5"/>
+  <text class="tb" x="742" y="230">Daily, Weekly</text>
+  <text class="b" x="742" y="250">all domains, joined by day</text>
+  <line class="rule" x1="710" y1="270" x2="904" y2="270"/>
+  <circle class="d-sleep" cx="712" cy="304" r="6"/>
+  <text class="tb" x="730" y="308">Wearable tabs</text>
+  <text class="b" x="730" y="328">sleep, readiness, burn</text>
+  <line class="rule" x1="710" y1="348" x2="904" y2="348"/>
+  <circle class="d-ex" cx="712" cy="382" r="6"/>
+  <text class="tb" x="730" y="386">Strava activities</text>
+  <text class="b" x="730" y="406">power and kJ per ride</text>
+  <line class="rule" x1="710" y1="426" x2="904" y2="426"/>
+  <circle class="d-gym" cx="712" cy="460" r="6"/>
+  <text class="tb" x="730" y="464">Gym sets</text>
+  <text class="b" x="730" y="484">with estimated 1RM</text>
+
+  <!-- Output -->
+  <rect class="claude" x="972" y="120" width="188" height="290" rx="10"/>
+  <text class="h" x="990" y="148">Dashboard</text>
+  <text class="b" x="990" y="172">A Claude artifact that</text>
+  <text class="b" x="990" y="190">reads the sheet live</text>
+  <text class="tb" x="990" y="224">Today</text>
+  <text class="b" x="990" y="244">your day, what fits now</text>
+  <text class="tb" x="990" y="272">Insights across domains</text>
+  <text class="b" x="990" y="292">patterns and goal date</text>
+  <circle class="d-food" cx="994" cy="314" r="4.5"/><circle class="d-sleep" cx="1004" cy="314" r="4.5"/><text class="b" x="1016" y="318">Food + sleep</text>
+  <circle class="d-ex" cx="994" cy="338" r="4.5"/><circle class="d-food" cx="1004" cy="338" r="4.5"/><text class="b" x="1016" y="342">Training + food</text>
+  <circle class="d-ex" cx="994" cy="362" r="4.5"/><circle class="d-body" cx="1004" cy="362" r="4.5"/><text class="b" x="1016" y="366">Power + weight</text>
+  <circle class="d-gym" cx="994" cy="386" r="4.5"/><circle class="d-body" cx="1004" cy="386" r="4.5"/><text class="b" x="1016" y="390">Strength in a deficit</text>
+
+  <rect class="core" x="972" y="430" width="188" height="68" rx="10"/>
+  <text class="h" x="990" y="458">Claude, in chat</text>
+  <text class="b" x="990" y="480">answers from the sheet</text>
+
+  <!-- Arrows -->
+  <path class="a2" d="M292,171 L360,171"/>
+  <path class="a2" d="M292,231 L360,231"/>
+  <path class="a" d="M624,150 L690,150"/>
+  <text class="lbl" x="634" y="142">writes</text>
+  <path class="a" d="M690,235 L624,235"/>
+  <text class="lbl" x="638" y="253">reads</text>
+
+  <path class="a" d="M292,309 L360,309"/>
+  <path class="ao" d="M292,387 L360,387"/>
+  <path class="ao" d="M292,465 L360,465"/>
+  <path class="a" d="M624,309 L690,309"/>
+  <path class="ao" d="M624,387 L690,387"/>
+  <path class="ao" d="M624,465 L690,465"/>
+
+  <path class="a" d="M924,265 L970,265"/>
+  <path class="a" d="M924,464 L970,464"/>
+
+  <!-- Legend -->
+  <path class="a" d="M40,572 L84,572"/><text class="lbl" x="94" y="576">Core</text>
+  <path class="ao" d="M150,572 L194,572"/><text class="lbl" x="204" y="576">Optional</text>
+  <text class="lbl" x="362" y="576">Everything is joined by day in one sheet, so Claude can find patterns no single app can.</text>
+  <text class="lbl" x="362" y="596">Your data stays in your own Google Sheet and Claude account.</text>
+</svg>

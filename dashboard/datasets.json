@@ -1,0 +1,128 @@
+{
+  "_readme": "Data sources for the Food & training dashboard. Write dash/meta, dash/params and each entry under datasets (daily, log, rides, sleep, suggestions, targets, workouts, and power and gym if the Strava sync or FitNotes import is set up) as datasets/<key>. Replace every YOUR_SHEET_ID with your own Food log sheet ID, and set dash/params.since to 60 days before today (the page resets it on load).",
+  "dash/meta": {
+    "title": "Food & training"
+  },
+  "dash/params": {
+    "since": "YYYY-MM-DDT00:00:00"
+  },
+  "datasets": {
+    "daily": {
+      "description": "One row per date from the Daily tab: wearable active calories (rides included), targets, food totals, weigh-ins, sleep, readiness and activity scores, total burn for the day, and the big-ride eve flag and carb target. Reads Daily!A1:AC400.",
+      "source": {
+        "args": {
+          "range": "Daily!A1:AC400",
+          "spreadsheetId": "YOUR_SHEET_ID"
+        },
+        "connector": "Google Sheets",
+        "kind": "query",
+        "tool": "get_values"
+      },
+      "title": "Daily tab"
+    },
+    "log": {
+      "description": "Every food and drink entry from the Log tab of the Food log sheet, with date and time in one column, added sugar, saturated fat, alcohol in standard drinks and glycaemic load. Reads Log!A:M.",
+      "source": {
+        "args": {
+          "range": "Log!A:M",
+          "spreadsheetId": "YOUR_SHEET_ID"
+        },
+        "connector": "Google Sheets",
+        "kind": "query",
+        "tool": "get_values"
+      },
+      "title": "Food log entries"
+    },
+    "rides": {
+      "description": "Your Strava activities from the last 60 days, with calories, moving time and distance. Reads your Strava activity list.",
+      "source": {
+        "args": {
+          "first": 50,
+          "range_start": "{{since}}"
+        },
+        "connector": "Strava",
+        "kind": "query",
+        "tool": "list_activities"
+      },
+      "title": "Strava activities"
+    },
+    "sleep": {
+      "description": "Main overnight sleep from the wearable_sleep tab the wearable sync fills: bedtime, early-hours waking (ending 15 minutes before the final wake), HRV by half of the night and when the lowest heart rate came. Reads wearable_sleep!A:Z.",
+      "source": {
+        "args": {
+          "range": "wearable_sleep!A:Z",
+          "spreadsheetId": "YOUR_SHEET_ID"
+        },
+        "connector": "Google Sheets",
+        "kind": "query",
+        "tool": "get_values"
+      },
+      "title": "Overnight sleep"
+    },
+    "targets": {
+      "description": "Calorie, protein, fibre, fat, saturated fat, added sugar, evening glycaemic load, carb (rest-day base, per exercise calorie, big-ride eve top-up) and weight targets from the Targets tab. Reads Targets!A1:B20.",
+      "source": {
+        "args": {
+          "range": "Targets!A1:B20",
+          "spreadsheetId": "YOUR_SHEET_ID"
+        },
+        "connector": "Google Sheets",
+        "kind": "query",
+        "tool": "get_values"
+      },
+      "title": "Targets"
+    },
+    "workouts": {
+      "description": "Workouts recorded by your wearable (surfing, swimming, gym and so on) from the wearable_workouts tab the sync fills; rides come from Strava. Reads wearable_workouts!A:J.",
+      "source": {
+        "args": {
+          "range": "wearable_workouts!A:J",
+          "spreadsheetId": "YOUR_SHEET_ID"
+        },
+        "connector": "Google Sheets",
+        "kind": "query",
+        "tool": "get_values"
+      },
+      "title": "Wearable workouts"
+    },
+    "suggestions": {
+      "title": "Claude's suggestions",
+      "description": "What to eat next, written by Claude to the Suggestions tab when you ask what to eat: from your history and at least one new idea, each with macros and why it fits. Reads Suggestions!A1:K30.",
+      "source": {
+        "args": {
+          "range": "Suggestions!A1:K30",
+          "spreadsheetId": "YOUR_SHEET_ID"
+        },
+        "connector": "Google Sheets",
+        "kind": "query",
+        "tool": "get_values"
+      }
+    },
+    "power": {
+      "title": "Ride power",
+      "description": "Every Strava activity from the strava_activities tab the Strava sync fills: date, sport, indoor flag, moving time, distance, climbing, average and weighted power, whether a power meter measured it, and kJ. Reads strava_activities!A:T.",
+      "source": {
+        "args": {
+          "range": "strava_activities!A:T",
+          "spreadsheetId": "YOUR_SHEET_ID"
+        },
+        "connector": "Google Sheets",
+        "kind": "query",
+        "tool": "get_values"
+      }
+    },
+    "gym": {
+      "title": "Gym sets",
+      "description": "One row per set from the gym_sets tab the FitNotes import fills: date, lift, weight, reps, estimated one-rep max and whether it is a body-weight lift. Reads gym_sets!A:J.",
+      "source": {
+        "args": {
+          "range": "gym_sets!A:J",
+          "spreadsheetId": "YOUR_SHEET_ID"
+        },
+        "connector": "Google Sheets",
+        "kind": "query",
+        "tool": "get_values"
+      }
+    }
+  }
+}
